@@ -3,29 +3,30 @@ import React from 'react';
 import CreateBar from '../CreateBar';
 import List from '../List';
 import ItemEditor from '../ItemEditor';
+import CreateLayer from '../CreateLayer';
 import ItemShowLayer from '../ItemShowLayer';
 import uuid from 'uuid';
 
-import './style.scss';
+import './style.less';
 
-class Deakmark extends React.Component{
+class Deskmark extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
             items: [{
                     "id": "67yhbui",
                     "title": "Hello",
-                    "content": "#testing markdown",
+                    "content": "testing markdown",
                     "time": 1423000999000
                 },{
                     "id": "rrryhbui",
                     "title": "Hello Again",
-                    "content": "#testing markdown",
+                    "content": "testing markdown",
                     "time": 1423800080002
 
                 }],
             selectedId: null,
-            eaditing: false
+            editing: "show"//////editing 对应三个值：edit,create,show
         };
         this.saveItem = this.saveItem.bind(this);
         this.selectItem = this.selectItem.bind(this);
@@ -59,6 +60,8 @@ class Deakmark extends React.Component{
                         exist.title = item.title;
                         exist.content = item.content;
 
+                        return exist;
+
 
                     } else {
                         return exist;
@@ -71,7 +74,7 @@ class Deakmark extends React.Component{
         this.setState({
             items,
             selectedId: item.id,
-            editing: false,
+            editing: "show",
         });
     }
 
@@ -84,7 +87,7 @@ class Deakmark extends React.Component{
 
         this.setState({
             selectedId: id,
-            editing: false
+            editing: "show"
         });
 
     }
@@ -93,7 +96,7 @@ class Deakmark extends React.Component{
 
         this.setState({
 
-            editing: true,
+            editing: "create",
             selectedId: null
 
         });
@@ -113,12 +116,12 @@ class Deakmark extends React.Component{
     editItem(id) {
         this.setState({
             selectedId: id,
-            editing: true,
+            editing: "edit",
         });
     }
 
     cancelEdit() {
-        this.setState({ editing: false });
+        this.setState({ editing: "show" });
     }
 
 
@@ -127,14 +130,26 @@ class Deakmark extends React.Component{
 
     render() {
 
-
         let {items, selectedId, editing} = this.state;
         let selected = selectedId && items.find( item => item.id === selectedId);
-        console.log(selected)
+        let mainPart;
+        switch (editing){
+            case 'show':
+                mainPart = <ItemShowLayer item={selected} onEdit={this.editItem} onDelete={this.deleteItem}/>;
+                break;
+            case 'create':
+                mainPart = <CreateLayer item={selected} onSave={this.saveItem} onCancel={this.cancelEdit}/>;
+                break;
+            case 'edit':
+                mainPart = <ItemEditor item={selected} onSave={this.saveItem} onCancel={this.cancelEdit}/>;
+                break;
 
-        let mainPart = editing ?
-            <ItemEditor item={selected} onSave={this.saveItem} onCancel={this.cancelEdit}/>
-            :<ItemShowLayer item={selected} onEdit={this.editItem} onDelete={this.deleteItem}/>;
+        }
+
+
+        // let mainPart = editing ?
+        //     <ItemEditor item={selected} onSave={this.saveItem} onCancel={this.cancelEdit}/>
+        //     :<ItemShowLayer item={selected} onEdit={this.editItem} onDelete={this.deleteItem}/>;
 
 
         return (
@@ -142,7 +157,7 @@ class Deakmark extends React.Component{
             <section className="deskmark-component">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-4 list-group">
                             <CreateBar onClick={this.createItem}/>
                             <List items={ this.state.items } onSelect={this.selectItem} />
                         </div>
@@ -157,4 +172,4 @@ class Deakmark extends React.Component{
 
     }
 }
-export default Deakmark;
+export default Deskmark;

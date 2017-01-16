@@ -1,6 +1,6 @@
 import React ,{PropTypes} from 'react';
 import marked from 'marked';
-import './style.scss';
+import './style.less';
 
 const propTypes = {
     item: PropTypes.object,
@@ -13,7 +13,7 @@ function ItemShowLayer({ item, onEdit, onDelete}){
     if( !item || !item.id ){
         return (
             <div className="col-md-8 item-show-layer-component">
-                <div className="no-selector">请选择左侧列表</div>
+                <div className="no-select">请选择左侧列表</div>
             </div>
         );
     }

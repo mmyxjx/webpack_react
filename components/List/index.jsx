@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import ListItem from '../ListItem';
+import "./style.less";
 
 const propTypes = {
     items: PropTypes.array.isRequired,
@@ -17,7 +18,7 @@ function List({items,onSelect}){
     );
     return (
 
-        <div className="list-component list-group">
+        <div className="list-component">
             {itemsContent}
 
         </div>

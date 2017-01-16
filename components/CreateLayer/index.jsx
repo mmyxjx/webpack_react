@@ -1,4 +1,4 @@
-import './style.less';
+import '../ItemEditor/style.less';
 import React, {PropTypes} from 'react';
 
 const propTypes = {
@@ -7,15 +7,13 @@ const propTypes = {
     onCancel: PropTypes.func.isRequired
 
 };
-class ItemEditor extends React.Component{
+class CreateLayer extends React.Component{
 
     render(){
         const {onSave, onCancel} = this.props;
-        const item = this.props.item; //item存在时返回的是编辑页，item不存在时设置返回空的title和content来初始化编辑页
-        let id = item.id;
+        const item = {title: '', content:''};//item存在时返回的是编辑页，item不存在时设置返回空的title和content来初始化编辑页
 
         let save = () => {
-
             const title = this.refs.title.value;
             const content = this.refs.content.value;
             if(title == ''|| content == ''){
@@ -23,17 +21,20 @@ class ItemEditor extends React.Component{
                 return;
             } else {
                 onSave({
-                    id:id,
                     title: title,
                     content: content
-                    });
-                }
+                });
+            }
+
+
         };
+
+
 
         return (
             <div className="col-md-8 item-editor-component">
                 <div className="control-area">
-                    <button onClick={save} className="btn btn-success">保存</button>
+                    <button onClick={save} className="btn btn-success">创建</button>
                     <button onClick={onCancel} className="btn btn-secondary">取消</button>
 
                 </div>
@@ -48,6 +49,6 @@ class ItemEditor extends React.Component{
     }
 
 }
-ItemEditor.propTypes = propTypes;
+CreateLayer.propTypes = propTypes;
 
-export default ItemEditor;
+export default CreateLayer;

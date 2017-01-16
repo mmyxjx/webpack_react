@@ -9,3 +9,15 @@ node_modules
 
 */.DS_Store
 .DS_Store
+
+*.eot
+*.woff
+*.ttf
+*.svg
+
+# my react teat file
+Hobby.js
+productBox.js
+bundle.js
+module.js
+

@@ -1,4 +1,4 @@
-import './style.scss';
+import './style.less';
 
 import React, { PropTypes } from 'react';
 
